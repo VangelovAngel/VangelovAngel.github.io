@@ -89,11 +89,11 @@ h1 i{display:block;color:var(--glow);padding-left:.5em}
 .stats span{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.04em}
 
 /* about */
-.photos{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-top:30px;align-items:end}
+.photos{display:grid;grid-template-columns:1fr;margin-top:30px}
+.photos figure img{aspect-ratio:5/4;object-position:50% 85%}
 figure{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--line)}
 figure img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:saturate(.8) brightness(.92);transition:transform .8s ease,filter .5s}
 figure:hover img{transform:scale(1.03);filter:saturate(1) brightness(1)}
-figure.tall img{aspect-ratio:3/4.4}
 figcaption{position:absolute;left:12px;bottom:10px;font-family:var(--mono);font-size:11px;color:var(--star);
   background:rgba(4,5,12,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:4px 9px;border-radius:999px}
 
@@ -181,9 +181,7 @@ footer a{color:var(--dim)}
   .stats strong{font-size:34px}
   .label{margin-bottom:16px}
   h2{font-size:clamp(32px,9vw,40px)}
-  .photos{grid-template-columns:1fr;gap:12px}
-  .photos figure img,.photos figure.tall img{aspect-ratio:4/5}
-  .photos figure.tall img{object-position:60% 20%}
+  .photos figure img{aspect-ratio:4/5;object-position:50% 50%}
   .chip{font-size:14px;padding:7px 12px}
   .chart{padding:4px;margin-inline:-4px}
   .chart .plabel{font-size:24px}
@@ -248,7 +246,6 @@ footer a{color:var(--dim)}
     <p class="lead">Since 2023 I've worked through SoftUni's Python and web track, from my first loops all the way to Django, PostgreSQL and SQLAlchemy, and finished every course with the top grade. Away from the keyboard I join Erasmus+ youth projects around Europe, speak on stage, and head up into the mountains whenever I can.</p>
     <div class="photos">
       <figure><img src="img/peak.jpg" alt="Angel sitting on a rock above a mountain lake in the clouds" loading="lazy"><figcaption>above the clouds</figcaption></figure>
-      <figure class="tall"><img src="img/stage.jpg" alt="Angel speaking on stage at an outdoor event" loading="lazy"><figcaption>mic on</figcaption></figure>
     </div>
   </section>
 
