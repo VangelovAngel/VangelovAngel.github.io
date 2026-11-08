@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#04050c">
 <title>Angel Vangelov</title>
 <meta name="description" content="Angel Vangelov: Python and web developer from Bulgaria, Erasmus+ participant, future founder.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -159,7 +160,40 @@ footer a{color:var(--dim)}
 @media (prefers-reduced-motion:reduce){.avatar::after{animation:none;transform:translateX(47px)}html{scroll-behavior:auto}}
 
 @media (max-width:600px){
+  html{scroll-padding-top:24px}
+  body{font-size:16.5px}
+  .wrap{width:min(720px,100% - 36px)}
+  /* bottom tab bar, within thumb reach */
+  .nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+    background:linear-gradient(to top,rgba(4,5,12,.92) 40%,rgba(4,5,12,0))}
+  .nav ul{margin:0 auto;padding:4px}
+  .nav .home{display:none}
+  .nav a{padding:10px 11px;font-size:11.5px}
+  footer{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
   section{padding:56px 0 16px}
+  .hero{padding:calc(36px + env(safe-area-inset-top)) 0 4px}
+  .me{margin-bottom:26px}
+  h1{font-size:clamp(58px,18vw,84px)}
+  h1 i{padding-left:.35em}
+  .intro{margin-top:22px}
+  .cta .btn{flex:1;text-align:center;padding:13px 14px}
+  .stats{margin-top:40px}
+  .stats strong{font-size:34px}
+  .label{margin-bottom:16px}
+  h2{font-size:clamp(32px,9vw,40px)}
+  .photos{grid-template-columns:1fr;gap:12px}
+  .photos figure img,.photos figure.tall img{aspect-ratio:4/5}
+  .photos figure.tall img{object-position:60% 20%}
+  .chip{font-size:14px;padding:7px 12px}
+  .chart{padding:4px;margin-inline:-4px}
+  .chart .plabel{font-size:24px}
+  .chart .psub{font-size:18px}
+  .chart .glabel{font-size:17px}
+  .chart .pt{r:6}
+  .chart .lon{display:none}
+  .trip{padding:16px}
+  .contact .row{padding:16px 2px}
+  .contact .v{font-size:21px}
   .stats{grid-template-columns:1fr 1fr}
   .stats div:nth-child(3){border-left:0;padding-left:0}
   .stats div:nth-child(n+3){border-top:1px solid var(--line)}
@@ -167,7 +201,6 @@ footer a{color:var(--dim)}
   .catalog time{grid-column:1/-1}
   .catalog h3{font-size:22px}
   .trips{grid-template-columns:1fr}
-  .photos{gap:8px}
   .intro{font-size:17px}
 }
 </style>
@@ -179,7 +212,7 @@ footer a{color:var(--dim)}
 <header class="nav">
   <nav aria-label="Sections">
     <ul>
-      <li><a href="#top" class="on">Home</a></li>
+      <li class="home"><a href="#top" class="on">Home</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#courses">Courses</a></li>
@@ -321,11 +354,11 @@ footer a{color:var(--dim)}
   const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
   const g=document.getElementById("graticule");
   for(let lon=17;lon<=25;lon+=2){el("line",{x1:X(lon),y1:pad-10,x2:X(lon),y2:H-pad+10,class:"grid"},g);
-    el("text",{x:X(lon)+4,y:H-12,class:"glabel"},g).textContent=lon+"°E";}
+    el("text",{x:X(lon)+4,y:H-12,class:"glabel lon"},g).textContent=lon+"°E";}
   for(let lat=42;lat<=52;lat+=2){el("line",{x1:pad-10,y1:Y(lat),x2:W-pad+10,y2:Y(lat),class:"grid"},g);
     el("text",{x:8,y:Y(lat)-4,class:"glabel"},g).textContent=lat+"°N";}
   const P={
-    bansko:{lon:23.49,lat:41.84,name:"Bansko",sub:"COMET · Surf Smart",dx:16,dy:-4},
+    bansko:{lon:23.49,lat:41.84,name:"Bansko",sub:"COMET · Surf Smart",dx:-16,dy:20,end:1},
     poland:{lon:19.4,lat:52.1,name:"Poland",sub:"Art Meets AI 2.0",dx:16,dy:4},
     kosice:{lon:21.26,lat:48.72,name:"Košice",sub:"Hope on Four Paws",dx:-16,dy:4,end:1}
   };
@@ -339,7 +372,7 @@ footer a{color:var(--dim)}
     el("circle",{cx:x,cy:y,r:13,class:"halo"},pts);
     el("circle",{cx:x,cy:y,r:3.6,class:"pt"},pts);
     el("text",{x:x+p.dx,y:y+p.dy,class:"plabel","text-anchor":p.end?"end":"start"},pts).textContent=p.name;
-    el("text",{x:x+p.dx,y:y+p.dy+17,class:"psub","text-anchor":p.end?"end":"start"},pts).textContent=p.sub;
+    el("text",{x:x+p.dx,y:y+p.dy+(innerWidth<=600?24:17),class:"psub","text-anchor":p.end?"end":"start"},pts).textContent=p.sub;
   });
 })();
 
