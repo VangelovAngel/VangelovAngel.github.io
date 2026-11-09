@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#04050c">
 <title>Angel Vangelov</title>
@@ -9,208 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-/* Layout idea: one night sky behind a single narrow column; sections read like entries in a star catalogue. */
-:root{
-  --void:#04050c;
-  --deep:#0a0d1d;
-  --line:rgba(190,200,255,.12);
-  --star:#eef0fa;
-  --dim:#8f95b2;
-  --glow:#c9d2ff;
-  --warm:#f2d9a6;
-  --display:"Instrument Serif", "Iowan Old Style", Georgia, serif;
-  --body:"Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono:"DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  color-scheme:dark;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
-body{background:var(--void);color:var(--star);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-img{max-width:100%;display:block}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--glow);outline-offset:3px;border-radius:6px}
-
-#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.haze{position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(60% 40% at 80% 0%, rgba(80,95,200,.16), transparent 70%),
-    radial-gradient(50% 35% at 0% 100%, rgba(120,80,170,.10), transparent 70%);}
-main,header,footer{position:relative;z-index:1}
-
-/* nav */
-.nav{position:sticky;top:0;z-index:5;display:flex;justify-content:center;padding:14px 16px}
-.nav ul{list-style:none;display:flex;gap:2px;padding:5px;border:1px solid var(--line);border-radius:999px;
-  background:rgba(8,10,24,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  max-width:100%;overflow-x:auto;scrollbar-width:none}
-.nav ul::-webkit-scrollbar{display:none}
-.nav a{display:block;padding:7px 14px;border-radius:999px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;
-  text-decoration:none;color:var(--dim);white-space:nowrap;transition:color .2s,background .2s}
-.nav a:hover{color:var(--star)}
-.nav a.on{color:var(--void);background:var(--star)}
-
-.wrap{width:min(720px,100% - 40px);margin-inline:auto}
-section{padding:72px 0 24px}
-.label{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
-  display:flex;align-items:center;gap:12px;margin-bottom:22px}
-.label::after{content:"";flex:1;height:1px;background:var(--line)}
-.label b{color:var(--glow);font-weight:500}
-h2{font-family:var(--display);font-weight:400;font-size:clamp(34px,6vw,46px);line-height:1.05;letter-spacing:-.01em;text-wrap:balance;margin-bottom:18px}
-h2 em{color:var(--glow)}
-p.lead{color:#c3c7dc;max-width:60ch}
-
-/* hero */
-.hero{padding:56px 0 8px;text-align:left}
-.me{display:flex;align-items:center;gap:16px;margin-bottom:34px}
-.avatar{position:relative;width:76px;height:76px;flex:none}
-.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;filter:saturate(.85) contrast(1.05)}
-.avatar::before{content:"";position:absolute;inset:-9px;border-radius:50%;border:1px solid rgba(201,210,255,.25)}
-.avatar::after{content:"";position:absolute;width:6px;height:6px;border-radius:50%;background:var(--warm);
-  box-shadow:0 0 10px 2px rgba(242,217,166,.7);top:50%;left:50%;margin:-3px;
-  animation:orbit 14s linear infinite}
-@keyframes orbit{from{transform:rotate(0) translateX(47px)}to{transform:rotate(360deg) translateX(47px)}}
-.me .tag{font-family:var(--mono);font-size:12px;color:var(--dim);line-height:1.7}
-.me .tag span{color:var(--star)}
-.live{display:inline-block;width:7px;height:7px;border-radius:50%;background:#8ee6b0;margin-right:7px;box-shadow:0 0 8px #8ee6b0;vertical-align:1px}
-h1{font-family:var(--display);font-weight:400;font-size:clamp(64px,15vw,128px);line-height:.94;letter-spacing:-.025em}
-h1 i{display:block;color:var(--glow);padding-left:.5em;margin-top:.04em}
-h1 .ch{display:inline-block}
-.intro{margin-top:28px;font-size:18px;color:#c3c7dc;max-width:46ch}
-.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-.btn{font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;text-decoration:none;padding:11px 18px;border-radius:999px;border:1px solid var(--line);
-  color:var(--star);transition:border-color .2s,background .2s}
-.btn:hover{border-color:rgba(201,210,255,.45);background:rgba(201,210,255,.06)}
-.btn.solid{background:var(--star);color:var(--void);border-color:var(--star)}
-.btn.solid:hover{background:var(--glow);border-color:var(--glow)}
-
-.stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.stats div{padding:18px 4px 16px;border-left:1px solid var(--line);padding-left:16px}
-.stats div:first-child{border-left:0;padding-left:0}
-.stats strong{display:block;font-family:var(--display);font-weight:400;font-size:38px;line-height:1;font-variant-numeric:tabular-nums}
-.stats span{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.04em}
-
-/* about */
-.photos{display:grid;grid-template-columns:1fr;margin-top:30px}
-.photos figure img{aspect-ratio:5/4;object-position:50% 85%}
-figure{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--line)}
-figure img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:saturate(.8) brightness(.92);transition:transform .8s ease,filter .5s}
-figure:hover img{transform:scale(1.03);filter:saturate(1) brightness(1)}
-figcaption{position:absolute;left:12px;bottom:10px;font-family:var(--mono);font-size:11px;color:var(--star);
-  background:rgba(4,5,12,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:4px 9px;border-radius:999px}
-
-/* skills */
-.groups{display:grid;gap:22px}
-.group h3{font-family:var(--mono);font-weight:400;font-size:12px;color:var(--dim);letter-spacing:.06em;margin-bottom:10px}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{font-size:14.5px;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(10,13,29,.55);display:inline-flex;align-items:center;gap:8px}
-.chip::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--glow);box-shadow:0 0 6px var(--glow)}
-
-/* courses */
-.catalog{list-style:none;border-top:1px solid var(--line)}
-.catalog li{display:grid;grid-template-columns:92px 1fr auto;gap:16px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line)}
-.catalog time{font-family:var(--mono);font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
-.catalog h3{font-family:var(--display);font-weight:400;font-size:25px;line-height:1.15}
-.catalog p{font-size:13.5px;color:var(--dim);margin-top:4px}
-.grade{text-align:right;font-family:var(--mono);font-size:12px;white-space:nowrap}
-.grade b{display:block;font-weight:500;color:var(--warm);font-size:14px}
-.grade a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line)}
-.grade a:hover{color:var(--star);border-color:var(--star)}
-.note{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:14px}
-
-/* erasmus */
-.chart{border:1px solid var(--line);border-radius:16px;background:rgba(8,10,24,.55);padding:10px;margin-bottom:26px}
-.chart svg{width:100%;height:auto;display:block}
-.chart .grid{stroke:rgba(190,200,255,.08);stroke-width:1}
-.chart .glabel{fill:#5d6380;font-family:var(--mono);font-size:11px}
-.chart .path{stroke:rgba(201,210,255,.55);stroke-width:1.2;stroke-dasharray:4 5;fill:none}
-.chart .pt{fill:var(--star)}
-.chart .halo{fill:rgba(201,210,255,.14)}
-.chart .plabel{fill:var(--star);font-family:var(--mono);font-size:15px}
-.chart .psub{fill:var(--dim);font-family:var(--mono);font-size:12px}
-.trips{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.trip{display:flex;flex-direction:column;gap:8px;padding:18px;border:1px solid var(--line);border-radius:14px;background:rgba(10,13,29,.55);
-  text-decoration:none;transition:border-color .25s,transform .25s}
-.trip:hover{border-color:rgba(201,210,255,.4);transform:translateY(-2px)}
-.trip .when{font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-content:space-between;gap:8px}
-.trip .when b{font-weight:400;color:var(--glow)}
-.trip h3{font-family:var(--display);font-weight:400;font-size:23px;line-height:1.15;text-wrap:balance}
-.trip .go{margin-top:auto;font-family:var(--mono);font-size:11.5px;color:var(--dim)}
-.trip:hover .go{color:var(--star)}
-
-/* contact */
-.contact{border-top:1px solid var(--line)}
-.contact .row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 4px;border-bottom:1px solid var(--line);text-decoration:none;transition:background .2s}
-.contact a.row:hover{background:rgba(201,210,255,.05)}
-.contact .k{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:2px}
-.contact .v{font-family:var(--display);font-size:clamp(22px,5vw,30px);line-height:1.2;text-decoration:none;overflow-wrap:anywhere}
-.contact .mail .v{color:var(--glow)}
-.contact .arr{font-family:var(--mono);color:var(--dim);font-size:18px;transition:transform .2s,color .2s}
-.contact a.row:hover .arr{color:var(--star);transform:translate(2px,-2px)}
-.contact button.btn{background:none;cursor:pointer;flex:none}
-
-footer{padding:90px 0 50px;text-align:center}
-footer .big{font-family:var(--display);font-style:italic;font-size:clamp(34px,7vw,52px);color:var(--glow);line-height:1.1}
-footer p{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:16px}
-footer a{color:var(--dim)}
-
-@media (prefers-reduced-motion:no-preference){
-  .rise{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
-  .d1{animation-delay:.08s}.d2{animation-delay:.18s}.d3{animation-delay:.3s}.d4{animation-delay:.42s}
-  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-  /* name: each letter comes into focus like a star */
-  h1 .ch{animation:starIn 1.2s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 60ms + .1s)}
-  @keyframes starIn{
-    0%{opacity:0;filter:blur(14px);transform:translateY(.32em) scale(1.12);text-shadow:0 0 34px rgba(201,210,255,.95)}
-    55%{opacity:1;filter:blur(0);text-shadow:0 0 22px rgba(201,210,255,.65)}
-    100%{opacity:1;filter:none;transform:none;text-shadow:0 0 0 rgba(201,210,255,0)}}
-  h1 .ch{transition:color .3s,text-shadow .3s}
-  h1:hover .ch{text-shadow:0 0 18px rgba(201,210,255,.35)}
-}
-@media (prefers-reduced-motion:reduce){.avatar::after{animation:none;transform:translateX(47px)}html{scroll-behavior:auto}}
-
-@media (max-width:600px){
-  html{scroll-padding-top:24px}
-  body{font-size:16.5px}
-  .wrap{width:min(720px,100% - 36px)}
-  /* bottom tab bar, within thumb reach */
-  .nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));
-    background:linear-gradient(to top,rgba(4,5,12,.92) 40%,rgba(4,5,12,0))}
-  .nav ul{margin:0 auto;padding:4px}
-  .nav .home{display:none}
-  .nav a{padding:10px 11px;font-size:11.5px}
-  footer{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
-  section{padding:56px 0 16px}
-  .hero{padding:calc(36px + env(safe-area-inset-top)) 0 4px}
-  .me{margin-bottom:26px}
-  h1{font-size:clamp(58px,18vw,84px)}
-  h1 i{padding-left:.35em}
-  .intro{margin-top:22px}
-  .cta .btn{flex:1;text-align:center;padding:13px 14px}
-  .stats{margin-top:40px}
-  .stats strong{font-size:34px}
-  .label{margin-bottom:16px}
-  h2{font-size:clamp(32px,9vw,40px)}
-  .photos figure img{aspect-ratio:4/5;object-position:50% 50%}
-  .chip{font-size:14px;padding:7px 12px}
-  .chart{padding:4px;margin-inline:-4px}
-  .chart .plabel{font-size:24px}
-  .chart .psub{font-size:18px}
-  .chart .glabel{font-size:17px}
-  .chart .pt{r:6}
-  .chart .lon{display:none}
-  .trip{padding:16px}
-  .contact .row{padding:16px 2px}
-  .contact .v{font-size:21px}
-  .stats{grid-template-columns:1fr 1fr}
-  .stats div:nth-child(3){border-left:0;padding-left:0}
-  .stats div:nth-child(n+3){border-top:1px solid var(--line)}
-  .catalog li{grid-template-columns:1fr auto;gap:4px 14px}
-  .catalog time{grid-column:1/-1}
-  .catalog h3{font-size:22px}
-  .trips{grid-template-columns:1fr}
-  .intro{font-size:17px}
-}
-</style>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <canvas id="sky" aria-hidden="true"></canvas>
@@ -298,7 +100,7 @@ footer a{color:var(--dim)}
   <section id="erasmus">
     <div class="label"><b>04</b> Erasmus+</div>
     <h2>My 2026 <em>constellation</em></h2>
-    <p class="lead" style="margin-bottom:24px">Four Erasmus+ youth projects across three countries, on AI and art, cybersecurity, online safety and animal welfare. Plotted by real latitude and longitude.</p>
+    <p class="lead spaced">Four Erasmus+ youth projects across three countries, on AI and art, cybersecurity, online safety and animal welfare. Plotted by real latitude and longitude.</p>
 
     <div class="chart">
       <svg viewBox="0 0 640 420" role="img" aria-label="Star chart of project locations: Bansko in Bulgaria, Košice in Slovakia, and Poland">
@@ -331,7 +133,7 @@ footer a{color:var(--dim)}
   <section id="contact">
     <div class="label"><b>05</b> Contact</div>
     <h2>Let's <em>talk</em></h2>
-    <p class="lead" style="margin-bottom:24px">For work, projects or Erasmus+ collaborations, email is the fastest way to reach me.</p>
+    <p class="lead spaced">For work, projects or Erasmus+ collaborations, email is the fastest way to reach me.</p>
     <div class="contact">
       <div class="row mail">
         <div><span class="k">Email</span><a class="v" href="mailto:vangelovangel5@gmail.com">vangelovangel5@gmail.com</a></div>
@@ -350,118 +152,6 @@ footer a{color:var(--dim)}
   <p>© 2026 Angel Dimov Vangelov · <a href="#top">back to top ↑</a></p>
 </footer>
 
-<script>
-/* ---------- star chart (Erasmus+) ---------- */
-(function(){
-  const NS="http://www.w3.org/2000/svg", W=640, H=420, pad=36;
-  const lon0=16.5, lon1=26.5, lat0=40.8, lat1=53.2;
-  const X=lon=>pad+(lon-lon0)/(lon1-lon0)*(W-2*pad);
-  const Y=lat=>pad+(lat1-lat)/(lat1-lat0)*(H-2*pad);
-  const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
-  const g=document.getElementById("graticule");
-  for(let lon=17;lon<=25;lon+=2){el("line",{x1:X(lon),y1:pad-10,x2:X(lon),y2:H-pad+10,class:"grid"},g);
-    el("text",{x:X(lon)+4,y:H-12,class:"glabel lon"},g).textContent=lon+"°E";}
-  for(let lat=42;lat<=52;lat+=2){el("line",{x1:pad-10,y1:Y(lat),x2:W-pad+10,y2:Y(lat),class:"grid"},g);
-    el("text",{x:8,y:Y(lat)-4,class:"glabel"},g).textContent=lat+"°N";}
-  const P={
-    bansko:{lon:23.49,lat:41.84,name:"Bansko",sub:"COMET · Surf Smart",dx:-16,dy:20,end:1},
-    poland:{lon:19.4,lat:52.1,name:"Poland",sub:"Art Meets AI 2.0",dx:16,dy:4},
-    kosice:{lon:21.26,lat:48.72,name:"Košice",sub:"Hope on Four Paws",dx:-16,dy:4,end:1}
-  };
-  const order=["bansko","poland","bansko","kosice"];
-  const pg=document.getElementById("paths");
-  const d=order.map((k,i)=>(i?"L":"M")+X(P[k].lon).toFixed(1)+" "+Y(P[k].lat).toFixed(1)).join(" ");
-  el("path",{d,class:"path"},pg);
-  const pts=document.getElementById("points");
-  Object.values(P).forEach(p=>{
-    const x=X(p.lon),y=Y(p.lat);
-    el("circle",{cx:x,cy:y,r:13,class:"halo"},pts);
-    el("circle",{cx:x,cy:y,r:3.6,class:"pt"},pts);
-    el("text",{x:x+p.dx,y:y+p.dy,class:"plabel","text-anchor":p.end?"end":"start"},pts).textContent=p.name;
-    el("text",{x:x+p.dx,y:y+p.dy+(innerWidth<=600?24:17),class:"psub","text-anchor":p.end?"end":"start"},pts).textContent=p.sub;
-  });
-})();
-
-/* ---------- night sky ---------- */
-(function(){
-  const c=document.getElementById("sky"),x=c.getContext("2d");
-  const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let w,h,dpr,stars=[],shoot=null,mx=0,my=0,tx=0,ty=0,last=0,nextShoot=3000;
-  function size(){
-    dpr=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;
-    c.width=w*dpr;c.height=h*dpr;x.setTransform(dpr,0,0,dpr,0,0);
-    const n=Math.round(w*h/2600);
-    stars=Array.from({length:n},()=>{const z=Math.random();return{
-      x:Math.random()*w,y:Math.random()*h,z,
-      r:z<.92?Math.random()*.9+.25:Math.random()*1.3+1,
-      a:Math.random()*.6+.3,tw:Math.random()*Math.PI*2,sp:Math.random()*1.6+.4,
-      tint:Math.random()<.12?(Math.random()<.5?"242,217,166":"190,205,255"):"238,240,250"}});
-  }
-  function draw(t){
-    const dt=t-last;last=t;
-    tx+=(mx-tx)*.04;ty+=(my-ty)*.04;
-    const sy=scrollY;
-    x.clearRect(0,0,w,h);
-    for(const s of stars){
-      const px=s.x+tx*s.z*14, py=((s.y-sy*s.z*.08)%h+h)%h+ty*s.z*14;
-      const a=still?s.a:s.a*(.65+.35*Math.sin(t*.001*s.sp+s.tw));
-      x.fillStyle=`rgba(${s.tint},${a})`;
-      x.beginPath();x.arc(px,py,s.r,0,6.283);x.fill();
-      if(s.r>1.4){x.fillStyle=`rgba(${s.tint},${a*.12})`;x.beginPath();x.arc(px,py,s.r*3.2,0,6.283);x.fill();}
-    }
-    if(!still){
-      nextShoot-=dt;
-      if(!shoot&&nextShoot<0){shoot={x:Math.random()*w*.7+w*.2,y:Math.random()*h*.35,l:0,life:1};nextShoot=6000+Math.random()*7000;}
-      if(shoot){
-        shoot.l+=dt*.9;shoot.life-=dt/900;
-        const ang=Math.PI*.8,hx=shoot.x+Math.cos(ang)*shoot.l,hy=shoot.y+Math.sin(ang)*shoot.l;
-        const tl=Math.min(shoot.l,140),gx=hx-Math.cos(ang)*tl,gy=hy-Math.sin(ang)*tl;
-        const gr=x.createLinearGradient(hx,hy,gx,gy);
-        gr.addColorStop(0,`rgba(255,255,255,${Math.max(shoot.life,0)})`);gr.addColorStop(1,"rgba(255,255,255,0)");
-        x.strokeStyle=gr;x.lineWidth=1.3;x.beginPath();x.moveTo(hx,hy);x.lineTo(gx,gy);x.stroke();
-        if(shoot.life<=0)shoot=null;
-      }
-      requestAnimationFrame(draw);
-    }
-  }
-  addEventListener("resize",()=>{size();if(still)draw(0)});
-  addEventListener("pointermove",e=>{mx=e.clientX/w-.5;my=e.clientY/h-.5},{passive:true});
-  if(still)addEventListener("scroll",()=>draw(0),{passive:true});
-  size();requestAnimationFrame(draw);
-})();
-
-/* ---------- split name into letters for the intro animation ---------- */
-(function(){
-  let i=0;
-  document.querySelectorAll("h1 .w").forEach(w=>{
-    const t=w.textContent;w.textContent="";
-    [...t].forEach(c=>{const s=document.createElement("span");s.className="ch";s.textContent=c;s.style.setProperty("--i",i++);w.appendChild(s);});
-  });
-})();
-
-/* ---------- copy email ---------- */
-document.getElementById("copy").addEventListener("click",async e=>{
-  const b=e.currentTarget;
-  try{await navigator.clipboard.writeText("vangelovangel5@gmail.com");b.textContent="Copied ✓";}
-  catch{b.textContent="Select it above";}
-  setTimeout(()=>b.textContent="Copy",2000);
-});
-
-/* ---------- active nav link ---------- */
-(function(){
-  const links=[...document.querySelectorAll(".nav a")];
-  const ids=links.map(a=>a.getAttribute("href").slice(1));
-  const secs=ids.map(id=>document.getElementById(id));
-  function update(){
-    let cur=ids[0];
-    secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<innerHeight*.4)cur=ids[i]});
-    if(innerHeight+scrollY>=document.body.scrollHeight-4)cur=ids[ids.length-1];
-    links.forEach(a=>{const on=a.getAttribute("href")==="#"+cur;a.classList.toggle("on",on);
-      if(on&&a.scrollIntoView&&a.parentElement.parentElement.scrollWidth>a.parentElement.parentElement.clientWidth){
-        const ul=a.parentElement.parentElement;ul.scrollLeft=a.offsetLeft-ul.clientWidth/2+a.clientWidth/2;}});
-  }
-  addEventListener("scroll",update,{passive:true});update();
-})();
-</script>
+<script src="js/main.js"></script>
 </body>
 </html>
